@@ -6,41 +6,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title> Tip calculator </title>
+    <title>Login / Register</title>
 </head>
 
 <body>
     <div class="hero bg-base-200 min-h-screen">
         <div class="hero-content text-center">
-            <div class="max-w-md">
-                <h1 class="text-5xl font-bold">Hello there</h1>
-                <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                    <fieldset class="fieldset">
-                        <label class="label">Accout Name</label>
-                        <input type="text" id="emailInput" class="input validator" placeholder="Your ID" required />
-                        <p class="validator-hint hidden">Required</p>
-                    </fieldset>
+            <div class="max-w-md w-full">
 
-                    <label class="fieldset">
-                        <span class="label">Password</span>
-                        <input type="password" id="inputPassword" class="input validator" placeholder="Password"
-                            required />
-                        <span class="validator-hint hidden">Required</span>
-                    </label>
+                <!-- Toggle Tabs -->
+                 
+                <div class="tabs tabs-boxed mb-6 justify-center" id="perant">
+                    <a class="tab " id="tabLogin" >Login</a>
+                    <a class="tab" id="tabRegister">Create Account</a>
+                </div>
 
-                    <button class="btn btn-neutral mt-4" id="inpBtn" type="submit">Login</button>
-                    <button class="btn btn-ghost mt-1" type="reset">Reset</button>
-                </form>
+                <!-- LOGIN FORM -->
+                <div id="loginForm">
+                    <h1 class="text-3xl font-bold mb-6">Welcome Back</h1>
+                    <form class="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-6 gap-4 flex flex-col">
+
+                        <div class="fieldset">
+                            <label class="label">Username</label>
+                            <input type="text" id="loginUsername" class="input validator w-full" placeholder="Your username" required />
+                            <p class="validator-hint hidden">Required</p>
+                        </div>
+
+                        <div class="fieldset">
+                            <label class="label">Password</label>
+                            <input type="password" id="loginPassword" class="input validator w-full" placeholder="Password" required />
+                            <p class="validator-hint hidden">Required</p>
+                        </div>
+
+                        
+                        <div id="loginError" class="alert alert-error hidden">
+                            <span id="loginErrorMsg"></span>
+                        </div>
+
+                        <button class="btn btn-neutral mt-2" type="submit" id="loginBtn">Login</button>
+                        <button class="btn btn-ghost" type="reset">Reset</button>
+
+                    </form>
+                </div>
+
+                <!-- CREATE ACCOUNT FORM -->
+                <div id="registerForm" class="hidden">
+                    <h1 class="text-3xl font-bold mb-6">Create Account</h1>
+                    <form class="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-6 gap-4 flex flex-col">
+
+                        <div class="fieldset">
+                            <label class="label">Username</label>
+                            <input type="text" id="regUsername" class="input validator w-full" placeholder="Choose a username" required />
+                            <p class="validator-hint hidden">Required</p>
+                        </div>
+
+                        <div class="fieldset">
+                            <label class="label">Password</label>
+                            <input type="password" id="regPassword" class="input validator w-full" placeholder="Min 4 characters" required minlength="4" />
+                            <p class="validator-hint hidden">At least 6 characters</p>
+                        </div>
+
+                        <div class="fieldset">
+                            <label class="label">Confirm Password</label>
+                            <input type="password" id="regConfirm" class="input validator w-full" placeholder="Repeat password" required />
+                            <p class="validator-hint hidden">Required</p>
+                        </div>
+
+                        <!-- Error message placeholder -->
+                        <div id="registerError" class="alert alert-error hidden">
+                            <span id="registerErrorMsg"></span>
+                        </div>
+
+                        <!-- Success message placeholder -->
+                        <div id="registerSuccess" class="alert alert-success hidden">
+                            <span id="registerSuccessMsg"></span>
+                        </div>
+
+                        <button class="btn btn-neutral mt-2" type="button" id="registerBtn">Create Account</button>
+                        
+                    </form>
+                </div>
+
+                <!-- DASHBOARD (shown after login) -->
+                <div id="dashboard" class="hidden">
+                    <h1 class="text-3xl font-bold mb-2">Hello, <span id="dashUsername" class="text-primary"></span>!</h1>
+                    <p class="opacity-60 mb-6">You are logged in.</p>
+                    <button class="btn btn-outline btn-error" id="logoutBtn">Logout</button>
+                </div>
 
             </div>
         </div>
     </div>
 
-
-
-
-
-    <script src="script.js"></script>
     <script src="login.js"></script>
 </body>
 
