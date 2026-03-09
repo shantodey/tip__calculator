@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -7,15 +7,44 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <title>Tip Calculator</title>
+    <title>Login / Register</title>
     <style>
-        body { font-family: 'Outfit', sans-serif; background-color: #f5f3ef; }
-        h1 { font-family: 'Instrument Serif', serif; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f5f3ef;
+        }
+        h1, .serif {
+            font-family: 'Instrument Serif', serif;
+        }
         .card-surface {
             background: #ffffff;
             border: 1px solid #e8e4de;
             border-radius: 16px;
             box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+        }
+        .tab-pill {
+            display: flex;
+            background: #eee9e2;
+            border-radius: 10px;
+            padding: 4px;
+            gap: 4px;
+        }
+        .tab-pill a {
+            flex: 1;
+            text-align: center;
+            padding: 8px 20px;
+            border-radius: 7px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.01em;
+        }
+        .tab-pill a.active {
+            background: #ffffff;
+            color: #1a1a1a;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.1);
         }
         .field-label {
             font-size: 0.72rem;
@@ -43,22 +72,59 @@
             box-shadow: 0 0 0 3px rgba(181,168,152,0.15);
         }
         .field-input::placeholder { color: #c4bfb8; }
-        .btn-calc {
+        .btn-primary-custom {
             width: 100%;
             background: #1a1a1a;
             color: #ffffff;
             border: none;
             border-radius: 9px;
-            padding: 12px;
+            padding: 11px;
             font-family: 'Outfit', sans-serif;
             font-size: 0.88rem;
             font-weight: 500;
             cursor: pointer;
             letter-spacing: 0.03em;
-            transition: background 0.2s ease;
-            margin-top: 12px;
+            transition: background 0.2s ease, transform 0.1s ease;
         }
-        .btn-calc:hover { background: #333; }
+        .btn-primary-custom:hover { background: #333; }
+        .btn-primary-custom:active { transform: scale(0.99); }
+        .btn-ghost-custom {
+            width: 100%;
+            background: transparent;
+            color: #999;
+            border: 1.5px solid #e3dfd8;
+            border-radius: 9px;
+            padding: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-ghost-custom:hover { border-color: #b5a898; color: #555; }
+        .error-box {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            color: #dc2626;
+        }
+        .success-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            color: #16a34a;
+        }
+        .dot-accent {
+            width: 6px; height: 6px;
+            background: #c9b89a;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 4px;
+        }
+        /* fade in on load */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(16px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -69,33 +135,93 @@
 
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div style="position:fixed;inset:0;background:radial-gradient(ellipse at 70% 80%, #ede8e0 0%, #f5f3ef 60%);z-index:-1;"></div>
+    <!-- Subtle background texture -->
+    <div style="position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%, #ede8e0 0%, #f5f3ef 60%);z-index:-1;"></div>
 
     <div class="w-full max-w-sm fade-up">
 
+        <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl" style="color:#1a1a1a;">Calculate Your Tip</h1>
+            <h1 class="text-4xl" style="color:#1a1a1a;">Account</h1>
+            <div class="flex items-center justify-center mt-2">
+                <span class="dot-accent"></span>
+                <span style="font-size:0.75rem;color:#aaa;letter-spacing:0.1em;">PRACTICE PROJECT</span>
+                <span class="dot-accent"></span>
+            </div>
         </div>
 
-        <div class="card-surface p-7" style="display:flex;flex-direction:column;gap:16px;">
-
-            <div>
-                <label class="field-label">Put the Bill</label>
-                <input type="number" class="field-input" id="bill" placeholder="Your Bill" />
-            </div>
-
-            <div>
-                <label class="field-label">Percent of Tip</label>
-                <input type="number" class="field-input" id="tip" placeholder="Tip Percentage" />
-            </div>
-
-            <button class="btn-calc" id="calculate">Calculate</button>
-
+        <!-- Tabs -->
+        <div class="tab-pill mb-5" id="perant">
+            <a id="tabLogin" class="active">Login</a>
+            <a id="tabRegister">Create Account</a>
         </div>
 
+        <!-- LOGIN FORM -->
+        <div id="loginForm" class="card-surface p-7">
+            <p class="serif text-2xl mb-5" style="color:#1a1a1a;">Welcome back</p>
+
+            <div style="margin-bottom:16px;">
+                <label class="field-label">Username</label>
+                <input type="text" id="loginUsername" class="field-input" placeholder="Your username" />
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label class="field-label">Password</label>
+                <input type="password" id="loginPassword" class="field-input" placeholder="••••••••" />
+            </div>
+
+            <div id="loginError" class="error-box hidden" style="margin-bottom:14px;">
+                <span id="loginErrorMsg"></span>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+                <button class="btn-primary-custom" id="loginBtn">Login</button>
+                <button class="btn-ghost-custom" onclick="document.getElementById('loginUsername').value='';document.getElementById('loginPassword').value=''">Reset</button>
+            </div>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="registerForm" class="card-surface p-7 hidden">
+            <p class="serif text-2xl mb-5" style="color:#1a1a1a;">New account</p>
+
+            <div style="margin-bottom:16px;">
+                <label class="field-label">Username</label>
+                <input type="text" id="regUsername" class="field-input" placeholder="Choose a username" />
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label class="field-label">Password</label>
+                <input type="password" id="regPassword" class="field-input" placeholder="Min 4 characters" />
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label class="field-label">Confirm Password</label>
+                <input type="password" id="regConfirm" class="field-input" placeholder="Repeat password" />
+            </div>
+
+            <div id="registerError" class="error-box hidden" style="margin-bottom:12px;">
+                <span id="registerErrorMsg"></span>
+            </div>
+            <div id="registerSuccess" class="success-box hidden" style="margin-bottom:12px;">
+                <span id="registerSuccessMsg"></span>
+            </div>
+
+            <button class="btn-primary-custom" type="button" id="registerBtn">Create Account</button>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="card-surface p-7 hidden text-center">
+            <div style="font-size:2.5rem;margin-bottom:8px;">👋</div>
+            <p class="serif text-2xl" style="color:#1a1a1a;">Hello, <span id="dashUsername" style="color:#b5896a;"></span></p>
+            <p style="font-size:0.82rem;color:#aaa;margin:8px 0 20px;letter-spacing:0.05em;">YOU ARE LOGGED IN</p>
+            <button class="btn-ghost-custom" id="logoutBtn" style="color:#dc2626;border-color:#fecaca;">Logout</button>
+        </div>
+
+        <!-- Footer -->
+        <p style="text-align:center;font-size:0.7rem;color:#bbb;margin-top:24px;letter-spacing:0.08em;">localStorage practice project</p>
     </div>
 
-    <script src="script.js"></script>
+    <script src="login.js"></script>
 </body>
 
 </html>
