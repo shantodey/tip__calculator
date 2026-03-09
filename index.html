@@ -6,99 +6,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Login / Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Tip Calculator</title>
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #f5f3ef; }
+        h1 { font-family: 'Instrument Serif', serif; }
+        .card-surface {
+            background: #ffffff;
+            border: 1px solid #e8e4de;
+            border-radius: 16px;
+            box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+        }
+        .field-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .field-input {
+            width: 100%;
+            background: #faf9f7;
+            border: 1.5px solid #e3dfd8;
+            border-radius: 9px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-family: 'Outfit', sans-serif;
+            color: #1a1a1a;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .field-input:focus {
+            border-color: #b5a898;
+            box-shadow: 0 0 0 3px rgba(181,168,152,0.15);
+        }
+        .field-input::placeholder { color: #c4bfb8; }
+        .btn-calc {
+            width: 100%;
+            background: #1a1a1a;
+            color: #ffffff;
+            border: none;
+            border-radius: 9px;
+            padding: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 0.03em;
+            transition: background 0.2s ease;
+            margin-top: 12px;
+        }
+        .btn-calc:hover { background: #333; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeUp 0.5s ease forwards; }
+    </style>
 </head>
 
-<body>
-    <div class="hero bg-base-200 min-h-screen">
-        <div class="hero-content text-center">
-            <div class="max-w-md w-full">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-                <!-- Toggle Tabs -->
-                 
-                <div class="tabs tabs-boxed mb-6 justify-center" id="perant">
-                    <a class="tab " id="tabLogin" >Login</a>
-                    <a class="tab" id="tabRegister">Create Account</a>
-                </div>
+    <div style="position:fixed;inset:0;background:radial-gradient(ellipse at 70% 80%, #ede8e0 0%, #f5f3ef 60%);z-index:-1;"></div>
 
-                <!-- LOGIN FORM -->
-                <div id="loginForm">
-                    <h1 class="text-3xl font-bold mb-6">Welcome Back</h1>
-                    <form class="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-6 gap-4 flex flex-col">
+    <div class="w-full max-w-sm fade-up">
 
-                        <div class="fieldset">
-                            <label class="label">Username</label>
-                            <input type="text" id="loginUsername" class="input validator w-full" placeholder="Your username" required />
-                            <p class="validator-hint hidden">Required</p>
-                        </div>
-
-                        <div class="fieldset">
-                            <label class="label">Password</label>
-                            <input type="password" id="loginPassword" class="input validator w-full" placeholder="Password" required />
-                            <p class="validator-hint hidden">Required</p>
-                        </div>
-
-                        
-                        <div id="loginError" class="alert alert-error hidden">
-                            <span id="loginErrorMsg"></span>
-                        </div>
-
-                        <button class="btn btn-neutral mt-2" type="submit" id="loginBtn">Login</button>
-                        <button class="btn btn-ghost" type="reset">Reset</button>
-
-                    </form>
-                </div>
-
-                <!-- CREATE ACCOUNT FORM -->
-                <div id="registerForm" class="hidden">
-                    <h1 class="text-3xl font-bold mb-6">Create Account</h1>
-                    <form class="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-6 gap-4 flex flex-col">
-
-                        <div class="fieldset">
-                            <label class="label">Username</label>
-                            <input type="text" id="regUsername" class="input validator w-full" placeholder="Choose a username" required />
-                            <p class="validator-hint hidden">Required</p>
-                        </div>
-
-                        <div class="fieldset">
-                            <label class="label">Password</label>
-                            <input type="password" id="regPassword" class="input validator w-full" placeholder="Min 4 characters" required minlength="4" />
-                            <p class="validator-hint hidden">At least 6 characters</p>
-                        </div>
-
-                        <div class="fieldset">
-                            <label class="label">Confirm Password</label>
-                            <input type="password" id="regConfirm" class="input validator w-full" placeholder="Repeat password" required />
-                            <p class="validator-hint hidden">Required</p>
-                        </div>
-
-                        <!-- Error message placeholder -->
-                        <div id="registerError" class="alert alert-error hidden">
-                            <span id="registerErrorMsg"></span>
-                        </div>
-
-                        <!-- Success message placeholder -->
-                        <div id="registerSuccess" class="alert alert-success hidden">
-                            <span id="registerSuccessMsg"></span>
-                        </div>
-
-                        <button class="btn btn-neutral mt-2" type="button" id="registerBtn">Create Account</button>
-                        
-                    </form>
-                </div>
-
-                <!-- DASHBOARD (shown after login) -->
-                <div id="dashboard" class="hidden">
-                    <h1 class="text-3xl font-bold mb-2">Hello, <span id="dashUsername" class="text-primary"></span>!</h1>
-                    <p class="opacity-60 mb-6">You are logged in.</p>
-                    <button class="btn btn-outline btn-error" id="logoutBtn">Logout</button>
-                </div>
-
-            </div>
+        <div class="text-center mb-8">
+            <h1 class="text-4xl" style="color:#1a1a1a;">Calculate Your Tip</h1>
         </div>
+
+        <div class="card-surface p-7" style="display:flex;flex-direction:column;gap:16px;">
+
+            <div>
+                <label class="field-label">Put the Bill</label>
+                <input type="number" class="field-input" id="bill" placeholder="Your Bill" />
+            </div>
+
+            <div>
+                <label class="field-label">Percent of Tip</label>
+                <input type="number" class="field-input" id="tip" placeholder="Tip Percentage" />
+            </div>
+
+            <button class="btn-calc" id="calculate">Calculate</button>
+
+        </div>
+
     </div>
 
-    <script src="login.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
