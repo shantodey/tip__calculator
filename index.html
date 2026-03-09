@@ -14,11 +14,24 @@
         <div class="hero-content text-center">
             <div class="max-w-md">
                 <h1 class="text-5xl font-bold">Hello there</h1>
-                <p class="py-6">
-                    Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-                    quasi. In deleniti eaque aut repudiandae et a id nisi.
-                </p>
-                <button class="btn btn-primary">Get Started</button>
+                <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+                    <fieldset class="fieldset">
+                        <label class="label">Accout Name</label>
+                        <input type="text" id="emailInput" class="input validator" placeholder="Your ID" required />
+                        <p class="validator-hint hidden">Required</p>
+                    </fieldset>
+
+                    <label class="fieldset">
+                        <span class="label">Password</span>
+                        <input type="password" id="inputPassword" class="input validator" placeholder="Password"
+                            required />
+                        <span class="validator-hint hidden">Required</span>
+                    </label>
+
+                    <button class="btn btn-neutral mt-4" id="inpBtn" type="submit">Login</button>
+                    <button class="btn btn-ghost mt-1" type="reset">Reset</button>
+                </form>
+
             </div>
         </div>
     </div>
@@ -28,6 +41,7 @@
 
 
     <script src="script.js"></script>
+    <script src="login.js"></script>
 </body>
 
 </html>
